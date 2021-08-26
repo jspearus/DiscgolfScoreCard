@@ -56,7 +56,9 @@ def sign_up():
             flash('Password must be greater than 5 characters', category='error')
         else:
             # add user to database
-            new_user = User(first_name=first_name, password=generate_password_hash(password1, method='sha256'))
+            new_user = User(
+                first_name=first_name, 
+                password=generate_password_hash(password1, method='sha256'))
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True)
