@@ -2,26 +2,28 @@
 {% block title %}Home{% endblock %}
 {% block content %} 
 <h1 align="center">Home {{ user.first_name }}</h1>
-<ul class="list-group list-group-flush" id="notes">
-    {% for note in user.notes %}
+<ul class="list-group list-group-flush" id="cards">
+    {% for card in user.cards %}
     <li class="list-group-item">
-        {{ note.data }}
-        <div align="right">{{ note.date }}</div>
-
-        <button type="button" class="close" onClick="deleteNote({{note.id}})">
+      <h5 align="left">Park: {{ card.park }} </h5>
+      <h6> Holes: {{ card.holes }} ID: {{ card.id }}
+        <button type="button" class="close" onClick="deleteNote({{card.id}})">
           <span aria-hidden="true">&times;</span>
         </button>
+      </h6>
       </li>
     {% endfor %}
 </ul>
 <form method="POST">
-   <textarea name="note" id="note" class="form-control"></textarea>
    <br/>
-   <div align="center">
-       <button type="submit" class="btn btn-primary">Add Note</button>
+   <div align="right">
+    <a href="/hole" class="btn btn-primary btn-lg " 
+    tabindex="-1" role="button" aria-disabled="true">New game</a>
    </div>
 </form>
-<div>
-  <a href="/scorecard" class="btn btn-primary btn-lg " tabindex="-1" role="button" aria-disabled="true">New Card</a>
+<br /> <br /> <br /> <br /> <br /> <br />
+<div align="right" >
+  <a href="/scorecard" class="btn btn-primary btn-lg " 
+  tabindex="-1" role="button" aria-disabled="true">New Card</a>
 </div>
 {% endblock %}

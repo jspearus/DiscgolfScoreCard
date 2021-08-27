@@ -1,23 +1,26 @@
 {% extends "base.html"%}
 {% block title %}New Card{% endblock %}
 {% block content %} 
-<h1 align="center">New Card</h1>
-<ul class="list-group list-group-flush" id="notes">
-    {% for note in user.notes %}
-    <li class="list-group-item">
+<h1 align="left">Create New Card Template</h1>
 
-
-     
-      </li>
-    {% endfor %}
-</ul>
 <form method="POST">
-
+  <div class="row g-33">
+    <input type="text" name="parkN" id="parkN" class="form-control" placeholder="Name of Park" aria-label="parkName">
+  </div>
+  <div class="row g-3">
+    <select type="text" name="holeN" id="holeN" class="form-select">
+      <option selected>select # of Holes</option>
+      <option value="7">7</option>
+      <option value="18">18</option>
+      <option value="27">27</option>
+    </select>
+  </div>
    <div align="right">
        <button type="submit" class="btn btn-primary">Create Card</button>
    </div>
-   <div align="left">
-    <a href="/" class="btn btn-primary btn-lg " tabindex="-1" role="button" aria-disabled="true">Back to Home</a>
-   </div>
 </form>
+<br /> <br /> <br /> <br /> <br /> <br />
+<div align="right">
+  <a href="/" class="btn btn-primary btn-lg " tabindex="-1" role="button" aria-disabled="true">Back to Home</a>
+</div>
 {% endblock %}

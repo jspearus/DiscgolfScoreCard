@@ -38,6 +38,11 @@ def logout():
 def scorecard():
     return render_template("scorecard.html", user=current_user)
 
+@auth.route('/hole')
+@login_required
+def hole():
+    return render_template("hole.html", user=current_user)
+
 @auth.route('/sign-up', methods=['GET', 'POST'])
 def sign_up():
     if request.method == 'POST':

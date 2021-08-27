@@ -1,0 +1,19 @@
+{% extends "base.html"%}
+{% block title %}Login{% endblock %}
+{% block content %} 
+<!-- Add form here-->
+<h1 align="center">New Game {{ user.first_name }}</h1>
+<div class="row mb-3">
+    <label align="center" class="col-sm-2 col-form-label col-form-label-sm">Hole: 1</label>
+    <label align="center" class="col-sm-2 col-form-label">Par: 3</label>
+  </div>
+  <div class="row mb-3">
+    <input type="text" class="form-control form-control-lg" id="throw" placeholder="Enter Throws">
+  </div>
+  <div class="row mb-3">
+    <label class="col-sm-2 col-form-label">Score: 0</label>
+  </div>
+<div align="left">
+    <a href="/" class="btn btn-primary btn-lg " tabindex="-1" role="button" aria-disabled="true">Back to Home</a>
+</div>
+{% endblock %}
