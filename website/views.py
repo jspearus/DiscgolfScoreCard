@@ -22,7 +22,7 @@ def home():
 
     return render_template("home.html", user=current_user)
 
-@views.route('/scorecard', methods=['GET', 'POST'])
+@views.route('/newcard', methods=['GET', 'POST'])
 @login_required
 def createCard():
     if request.method == 'POST':
@@ -38,7 +38,7 @@ def createCard():
             flash('Card added!', category='success')
             return render_template("home.html", user=current_user)
 
-    return render_template("scorecard.html", user=current_user)
+    return render_template("newcard.html", user=current_user)
 
 @views.route('/delete-note', methods=['POST'])
 def delete_note():

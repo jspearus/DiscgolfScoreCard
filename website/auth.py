@@ -33,15 +33,15 @@ def logout():
     logout_user()
     return redirect(url_for('auth.login'))
 
-@auth.route('/scorecard')
+@auth.route('/newcard')
 @login_required
-def scorecard():
-    return render_template("scorecard.html", user=current_user)
+def newcard():
+    return render_template("newcard.html", user=current_user)
 
 @auth.route('/hole')
 @login_required
 def hole():
-    return render_template("hole.html", user=current_user)
+    return render_template("hole.html", user=current_user, par=3, Score=0)
 
 @auth.route('/sign-up', methods=['GET', 'POST'])
 def sign_up():
