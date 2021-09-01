@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, jsonify
 from flask_login import login_required, current_user
-from .models import Note, Card
+from .models import Note, courseTemplate, holeTemplates
 from . import db
 import json
 
@@ -20,7 +20,7 @@ def home():
             db.session.commit()
             flash('Note added!', category='success')
 
-    return render_template("home.html", user=current_user)
+    return render_template("home.html", User=current_user)
 
 @views.route('/newcard', methods=['GET', 'POST'])
 @login_required
@@ -32,19 +32,19 @@ def createCard():
         if len(parkName) < 1:
             flash('note is too short', category='error')
         else:
-            new_note = Card(park=parkName, holes= numHoles, user_id=current_user.id)
+            new_note = courseTemplate(parkName=parkName, numHoles= numHoles, user_id=current_user.id)
             db.session.add(new_note)
             db.session.commit()
             flash('Card added!', category='success')
-            return render_template("home.html", user=current_user)
+            return render_template("home.html", User=current_user)
 
-    return render_template("newcard.html", user=current_user)
+    return render_template("newcard.html", User=current_user)
 
 @views.route('/delete-note', methods=['POST'])
 def delete_note():
     note = json.loads(request.data)
     noteId = note['noteId']
-    note = Card.query.get(noteId)
+    note = courseTemplate.query.get(noteId)
     if note:
         if note.user_id == current_user.id:
             db.session.delete(note)

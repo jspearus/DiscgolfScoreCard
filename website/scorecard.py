@@ -1,13 +1,13 @@
 from flask import Blueprint, render_template, request, flash, jsonify
 from flask_login import login_required, current_user
-from .models import Note, Card
+from .models import Note, courseTemplate, holeTemplates, savedGames, savedGameHoles
 from . import db
 import json
 
 
 scorecard = Blueprint('scorecard', __name__)
 
-@scorecard.route('/hole', methods=['GET', 'POST'])
+@scorecard.route('/newGame', methods=['GET', 'POST'])
 @login_required
 def home():
     if request.method == 'POST':
@@ -23,4 +23,4 @@ def home():
       
             
 
-    return render_template("hole.html", user=current_user, Score=Score, par=3)
+    return render_template("newgame.html", User=current_user, Score=Score, par=3)

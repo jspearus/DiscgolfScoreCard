@@ -24,7 +24,7 @@ def login():
         else:
             flash('name does not exist.', category='error')
 
-    return render_template("login.html", user=current_user)
+    return render_template("login.html", User=current_user)
 
 
 @auth.route('/logout')
@@ -36,12 +36,12 @@ def logout():
 @auth.route('/newcard')
 @login_required
 def newcard():
-    return render_template("newcard.html", user=current_user)
+    return render_template("newcard.html", User=current_user)
 
-@auth.route('/hole')
+@auth.route('/newgame')
 @login_required
-def hole():
-    return render_template("hole.html", user=current_user, par=3, Score=0)
+def newgame():
+    return render_template("newgame.html", User=current_user, par=3, Score=0)
 
 @auth.route('/sign-up', methods=['GET', 'POST'])
 def sign_up():
@@ -71,4 +71,4 @@ def sign_up():
             return redirect(url_for('views.home'))
 
 
-    return render_template("sign_up.html", user=current_user)
+    return render_template("sign_up.html", User=current_user)
