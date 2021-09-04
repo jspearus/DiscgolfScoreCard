@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from sqlalchemy.sql.functions import user
-from .models import User
+from .models import User, courseTemplate, holeTemplates
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user
@@ -41,7 +41,9 @@ def newcard():
 @auth.route('/newgame')
 @login_required
 def newgame():
-    return render_template("newgame.html", User=current_user, par=3, Score=0)
+    course = courseTemplate.query.filter_by(parkName='Summit').first()
+    return render_template("newgame.html", Park=course.parkName, 
+        User=current_user, hole=1, par=3, Throws=0, Score=0)
 
 @auth.route('/sign-up', methods=['GET', 'POST'])
 def sign_up():

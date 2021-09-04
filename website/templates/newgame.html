@@ -2,24 +2,47 @@
 {% block title %}NewGame{% endblock %}
 {% block content %} 
 <form method="POST">
-  <h3 align ="center">Hole 1 
+  <h3 align ="center">Park: {{Park}} 
+  </h3>
+  <h3 align ="center">
+    <div>Hole:</div><a id='currentHole' name='currentHole' value='1'>
+      {{hole}}
+    </a>
   </h3>
   <h5 align ="center">PAR: {{par}}
   </h5>
   <div class="form-group">
-      <label for="stroke">Throws</label>
+      <label for="stroke">Throws: {{Throws}}</label>
       <input 
           type="number" 
           class="form-control" 
           id="throws" 
           name="throws" 
-          placeholder="Enter Throws"
       />
   </div>
   <br />
   <h5 align="center">Score: {{Score}}
   </h5>
   <br />
-  <button align="right" type="submit" class="btn btn-primary">Enter</button>
+  <div align="center" >
+    <button class="btn btn-primary"
+            name="NavHole" 
+            type="submit" value="Enter">Enter</button>
+  </div>
+  <br /><br /><br />
+  <div align="left" class="row justify-content-md-center">
+    <div class="col col-md-2">
+      <button 
+        class="btn btn-primary"
+        name="NavHole"
+        type="submit" value="Pre">Prev. Hole</button>
+    </div>
+    <div align="right" class="col col-md-2">
+      <button 
+      class="btn btn-primary"
+      name="NavHole"
+      type="submit" value="Next">Next Hole</button>
+    </div>
+  </div>
 </form>
 {% endblock %}
