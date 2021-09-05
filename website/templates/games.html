@@ -1,0 +1,28 @@
+{% extends "base.html"%}
+{% block title %}Saved Games{% endblock %}
+{% block content %} 
+<h1 align="center">Saved Games:  {{ User.first_name }}</h1>
+<h4 align="left" >Recent Games</h4>
+<form method="POST">
+    <select type="number" class="form-select form-select-lg mb-3" name="Game" id="Game" aria-label=".form-select-lg example">
+        <option value=NULL selected>Select Game</option>
+        {% for savedGames in User.games %}
+            {% if savedGames.user_id == User.id %}
+                <option value={{savedGames.id}}>{{savedGames.parkName}} : 
+                    {{ savedGames.end_date  }}
+                </option>
+            {% endif %}
+        {% endfor %}
+    </select>
+    <div align="right">
+        <button type="submit" class="btn btn-primary">View Card</button>
+    </div>
+</form>
+<br />
+<br /> <br /> <br /> <br /> <br /> <br />
+  <br/>
+  <div align="right">
+   <a href="/" class="btn btn-primary btn-lg " 
+   tabindex="-1" role="button" aria-disabled="true">Back to home</a>
+  </div>
+{% endblock %}

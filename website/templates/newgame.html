@@ -5,11 +5,28 @@
   <h3 align ="center">Park: {{Park}} 
   </h3>
   <h3 align ="center">
-    <div>Hole:</div><a id='currentHole' name='currentHole' value='1'>
+    <div>Hole:</div>
+    <a id='currentHole' name='currentHole' value='1'>
       {{hole}}
     </a>
   </h3>
-  <h5 align ="center">PAR: {{par}}
+  <div align="left" class="row justify-content-md-center">
+    <div class="col col-md-2">
+      <button 
+        class="btn btn-primary"
+        name="NavHole"
+        type="submit" value="dn">-</button>
+    </div>
+    <div>
+      <h5 align ="center">PAR: {{par}}
+    </div>
+    <div align="right" class="col col-md-2">
+      <button 
+      class="btn btn-primary"
+      name="NavHole"
+      type="submit" value="up">+</button>
+    </div>
+  </div>
   </h5>
   <div class="form-group">
       <label for="stroke">Throws: {{Throws}}</label>
@@ -44,5 +61,22 @@
       type="submit" value="Next">Next Hole</button>
     </div>
   </div>
+  <br /><br /><br />
+  {% if GameOver %}
+    <div align="left" class="row justify-content-md-center">
+      <div class="col col-md-2">
+        <button 
+          class="btn btn-primary"
+          name="NavHole"
+          type="submit" value="del">Delete Game</button>
+      </div>
+      <div align="right" class="col col-md-2">
+        <button 
+        class="btn btn-primary"
+        name="NavHole"
+        type="submit" value="save">Save Game</button>
+      </div>
+    </div>
+  {% endif %}
 </form>
 {% endblock %}

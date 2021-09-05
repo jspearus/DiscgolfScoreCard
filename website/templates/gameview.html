@@ -1,0 +1,27 @@
+{% extends "base.html"%}
+{% block title %}Saved Games{% endblock %}
+{% block content %} 
+<h4 align="left" >Park: {{ game }}</h4>
+<h4 align="left" >Date: {{ date }}</h4>
+<form method="POST">
+  {% for savedGameHoles in savedGame.holes %}
+    {% if savedGameHoles.user_id == User.id %}
+      <li class="list-group-item">
+        <h7 align="left">Hole: {{ savedGameHoles.hole }} - 
+          Par: {{  savedGameHoles.par }} - Throws: {{ savedGameHoles.throws }} 
+          - Score: {{savedGameHoles.throws - savedGameHoles.par}}</h7>
+        </li>
+    {% endif %}
+  {% endfor %}
+  <br /><br/>
+  <button 
+    class="btn btn-primary"
+    name="delete"
+    id="delete"
+    type="submit" value="DEL">Delete Game</button>
+</form>
+<div align="right">
+  <a href="/games" class="btn btn-primary btn-lg " 
+  tabindex="-1" role="button" aria-disabled="true">Back to Games</a>
+</div>
+{% endblock %}

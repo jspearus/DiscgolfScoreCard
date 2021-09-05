@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from sqlalchemy.sql.functions import user
-from .models import User, courseTemplate, holeTemplates
+from .models import User, courseTemplate, holeTemplates, currentGame, currentGameHoles
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user
@@ -33,17 +33,45 @@ def logout():
     logout_user()
     return redirect(url_for('auth.login'))
 
-@auth.route('/newcard')
-@login_required
-def newcard():
-    return render_template("newcard.html", User=current_user)
+    return f(self, *args, **kwargs)
+
 
 @auth.route('/newgame')
 @login_required
 def newgame():
-    course = courseTemplate.query.filter_by(parkName='Summit').first()
+    park = 'Summit'
+    course = courseTemplate.query.filter_by(parkName=park).first()
+    curGame = currentGame.query.filter_by(user_id=current_user.id).first()
+    if curGame:
+        print(curGame.parkName)
+    else:
+        new_game = currentGame(
+            parkName=course.parkName,
+            numHoles=course.numHoles,
+            curHole=1,
+            user_id=current_user.id)
+        db.session.add(new_game)
+        for i in range(course.numHoles):
+            temPar = holeTemplates.query.filter_by(user_id=current_user.id,
+                        course_id=course.id, hole=i+1).first()
+            new_hole = currentGameHoles(
+                hole=i+1, 
+                par=temPar.par,
+                throws=0,
+                user_id=current_user.id)
+
+            db.session.add(new_hole)
+            new_game.holes.append(new_hole)
+        db.session.commit()
+    curGame = currentGame.query.filter_by(user_id=current_user.id).first()
+    curHole = currentGameHoles.query.filter_by(hole=curGame.curHole).first()
+    if curGame.numHoles == curHole.hole :
+        GameOver = True
+    else:
+        GameOver = False
     return render_template("newgame.html", Park=course.parkName, 
-        User=current_user, hole=1, par=3, Throws=0, Score=0)
+        User=current_user, hole=curGame.curHole, par=curHole.par, 
+        Throws=curHole.throws, Score=curHole.throws-curHole.par, GameOver=GameOver)
 
 @auth.route('/sign-up', methods=['GET', 'POST'])
 def sign_up():
