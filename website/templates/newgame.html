@@ -6,7 +6,7 @@
   </h3>
   <h3 align ="center">
     <div>Hole:</div>
-    <a id='currentHole' name='currentHole' value='1'>
+    <a>
       {{hole}}
     </a>
   </h3>
@@ -15,7 +15,7 @@
       <button 
         class="btn btn-primary"
         name="NavHole"
-        type="submit" value="dn">-</button>
+        type="submit" value="DN">-</button>
     </div>
     <div>
       <h5 align ="center">PAR: {{par}}
@@ -24,10 +24,11 @@
       <button 
       class="btn btn-primary"
       name="NavHole"
-      type="submit" value="up">+</button>
+      type="submit" value="UP">+</button>
     </div>
   </div>
   </h5>
+  <br /><br />
   <div class="form-group">
       <label for="stroke">Throws: {{Throws}}</label>
       <input 
@@ -35,6 +36,7 @@
           class="form-control" 
           id="throws" 
           name="throws" 
+          onkeypress="return noenter()"
       />
   </div>
   <br />
@@ -79,4 +81,8 @@
     </div>
   {% endif %}
 </form>
+<script type="text/javascript">
+  function noenter() {
+    return !(window.event && window.event.keyCode == 13); }
+  </script>
 {% endblock %}
