@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from sqlalchemy.sql.functions import user
-from .models import User, courseTemplate, holeTemplates, currentGame, currentGameHoles
+from .models import User, courseTemplate, holeTemplates
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user
@@ -35,44 +35,6 @@ def logout():
 
     return f(self, *args, **kwargs)
 
-
-@auth.route('/newgame')
-@login_required
-def newgame():
-    park = 'Summit'
-    course = courseTemplate.query.filter_by(parkName=park).first()
-    curGame = currentGame.query.filter_by(user_id=current_user.id).first()
-    if curGame:
-        print(curGame.parkName)
-    else:
-        new_game = currentGame(
-            parkName=course.parkName,
-            numHoles=course.numHoles,
-            curHole=1,
-            user_id=current_user.id)
-        db.session.add(new_game)
-        for i in range(course.numHoles):
-            temPar = holeTemplates.query.filter_by(user_id=current_user.id,
-                        course_id=course.id, hole=i+1).first()
-            new_hole = currentGameHoles(
-                hole=i+1, 
-                par=temPar.par,
-                throws=0,
-                user_id=current_user.id)
-
-            db.session.add(new_hole)
-            new_game.holes.append(new_hole)
-        db.session.commit()
-    curGame = currentGame.query.filter_by(user_id=current_user.id).first()
-    curHole = currentGameHoles.query.filter_by(hole=curGame.curHole).first()
-    if curGame.numHoles == curHole.hole :
-        GameOver = True
-    else:
-        GameOver = False
-    return render_template("newgame.html", Park=course.parkName, 
-        User=current_user, hole=curGame.curHole, par=curHole.par, 
-        Throws=curHole.throws, Score=curHole.throws-curHole.par, GameOver=GameOver)
-
 @auth.route('/sign-up', methods=['GET', 'POST'])
 def sign_up():
     if request.method == 'POST':
@@ -80,6 +42,7 @@ def sign_up():
         password1 = request.form.get('password1')
         password2 = request.form.get('password2')
 
+        #checks to see if the first name is valid
         user = User.query.filter_by(first_name=first_name).first()
         if user:
             flash('Name already exists', category='error')

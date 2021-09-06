@@ -18,6 +18,7 @@
       <title>{% block title %}Base{% endblock %}</title>
     </head>
     <body>
+      <!-- Main menu code-->
        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <button 
                 class="navbar-toggler" 
@@ -39,7 +40,8 @@
               </div>  
             </div>
        </nav> 
-
+      <!-- End of Main menu code-->
+      <!-- Flash Message Code-->
        {% with messages = get_flashed_messages(with_categories=true) %} {% if
         messages %} {% for category, message in messages %} {% if category ==
         'error' %}
@@ -57,12 +59,15 @@
           </button>
         </div>
         {% endif %} {% endfor %} {% endif %} {% endwith %}
-
+        <!-- End of Flash Message Code-->
+        <!-- Defines where templates will be loaded-->
        <div class="container">
            {% block content %} 
             base page
            {% endblock %}
        </div>
+       <!-- Defines where templates will be loaded-->
+       <!-- Javascript Libraries-->
         <script
             src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -78,7 +83,8 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"
         ></script>
-
+        <!-- End of Javascript Libraries-->
+       <!-- Defines the name and location of the javascript-->
         <script 
             type="text/javascript"
             src="{{ url_for('static', filename='index.js') }}"

@@ -1,6 +1,7 @@
-from flask import Blueprint, render_template, request, flash, jsonify
+from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for
 from flask_login import login_required, current_user
-from .models import Note, courseTemplate, holeTemplates, currentGame, currentGameHoles, savedGames, savedGameHoles
+from .models import Note, courseTemplate, holeTemplates
+from .models import currentGame, currentGameHoles, savedGames, savedGameHoles
 from . import db
 import json
 
@@ -61,7 +62,8 @@ def home():
 
         elif btnPress == 'del':
             deleteCurrentGame()
-            return render_template("home.html", User=current_user)
+            #rediects to home function in views script
+            return redirect(url_for('views.home'))
 
         elif btnPress == 'save':
             game = currentGame.query.filter_by(user_id=current_user.id).first()
@@ -86,7 +88,7 @@ def home():
             new_hole=''
             deleteCurrentGame()
             flash('Game Saved!', category='success')
-            return render_template("home.html", User=current_user)
+            return redirect(url_for('views.home'))
         btnPress = ''
     curHole = currentGameHoles.query.filter_by(hole=curGame.curHole).first()
     if curGame.numHoles == curHole.hole and curHole.throws > 0:
@@ -97,6 +99,7 @@ def home():
                     User=current_user, hole=curGame.curHole, Throws=curHole.throws, 
                     Score=curHole.throws - curHole.par, par=curHole.par, GameOver=GameOver)
 
+# function to delete the current played game
 def deleteCurrentGame():
     game = currentGame.query.filter_by(user_id=current_user.id).first()
     if game:

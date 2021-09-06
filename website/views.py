@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, jsonify
 from flask_login import login_required, current_user
-from .models import Note, courseTemplate, holeTemplates, savedGames, savedGameHoles
+from .models import Note, courseTemplate, holeTemplates, savedGames, savedGameHoles, currentGame, currentGameHoles
 from . import db
 import json
 
@@ -55,7 +55,42 @@ def createCard():
 
     return render_template("newcard.html", User=current_user)
 
+@views.route('/newgame')
+@login_required
+def newgame():
+    park = 'Summit'
+    course = courseTemplate.query.filter_by(parkName=park).first()
+    curGame = currentGame.query.filter_by(user_id=current_user.id).first()
+    if curGame:
+        print(curGame.parkName)
+    else:
+        new_game = currentGame(
+            parkName=course.parkName,
+            numHoles=course.numHoles,
+            curHole=1,
+            user_id=current_user.id)
+        db.session.add(new_game)
+        for i in range(course.numHoles):
+            temPar = holeTemplates.query.filter_by(user_id=current_user.id,
+                        course_id=course.id, hole=i+1).first()
+            new_hole = currentGameHoles(
+                hole=i+1, 
+                par=temPar.par,
+                throws=0,
+                user_id=current_user.id)
 
+            db.session.add(new_hole)
+            new_game.holes.append(new_hole)
+        db.session.commit()
+    curGame = currentGame.query.filter_by(user_id=current_user.id).first()
+    curHole = currentGameHoles.query.filter_by(hole=curGame.curHole).first()
+    if curGame.numHoles == curHole.hole :
+        GameOver = True
+    else:
+        GameOver = False
+    return render_template("newgame.html", Park=course.parkName, 
+        User=current_user, hole=curGame.curHole, par=curHole.par, 
+        Throws=curHole.throws, Score=curHole.throws-curHole.par, GameOver=GameOver)
 
 @views.route('/games', methods=['GET', 'POST'])
 @login_required

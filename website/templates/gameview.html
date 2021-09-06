@@ -1,9 +1,10 @@
-{% extends "base.html"%}
-{% block title %}Saved Games{% endblock %}
+{% extends "base.html"%}<!-- Loads Base html file -->
+{% block title %}Saved Games{% endblock %}<!-- Labels the browser window -->
 {% block content %} 
 <h4 align="left" >Park: {{ game }}</h4>
 <h4 align="left" >Date: {{ date }}</h4>
 <form method="POST">
+  <!-- Creates a table of the selected game score card -->
   {% for savedGameHoles in savedGame.holes %}
     {% if savedGameHoles.user_id == User.id %}
       <li class="list-group-item">
@@ -13,15 +14,20 @@
         </li>
     {% endif %}
   {% endfor %}
+  <!-- End of Creates a table of the selected game score card -->
   <br /><br/>
+  <!-- button sends the delete command to delete the selected saved game -->
   <button 
     class="btn btn-primary"
     name="delete"
     id="delete"
     type="submit" value="DEL">Delete Game</button>
+    <!-- End of button sends the delete command to delete the selected saved game -->
 </form>
+<!-- navigates to to games list page -->
 <div align="right">
   <a href="/games" class="btn btn-primary btn-lg " 
   tabindex="-1" role="button" aria-disabled="true">Back to Games</a>
 </div>
+<!-- End of navigates to to games list page -->
 {% endblock %}

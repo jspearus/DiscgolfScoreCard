@@ -1,8 +1,9 @@
-{% extends "base.html"%}
-{% block title %}Home{% endblock %}
+{% extends "base.html"%}<!-- Loads Base html file  -->
+{% block title %}Home{% endblock %} <!-- LAbels the browser window -->
 {% block content %} 
 <h1 align="center">Home {{ User.first_name }}</h1>
 <h4 align="left" >Card Templates</h4>
+<!-- Creates a list of blank score card templates  -->
 <ul class="list-group list-group-flush" id="cards">
     {% for courseTemplate in User.courses %}
       {% if courseTemplate.user_id == User.id %}
@@ -20,6 +21,7 @@
       {% endif %}
     {% endfor %}
 </ul>
+<!-- End of Creates a list of blank score card templates  -->
 <br />
 <div align="right" >
   <a href="/newcard" class="btn btn-primary btn-lg " 
