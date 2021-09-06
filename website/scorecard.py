@@ -24,7 +24,6 @@ def home():
         Throws = request.form.get('throws')
         Par = temHole.par
         hole = curGame.curHole
-        print(btnPress)
         
         if btnPress == 'Enter':
             if ((Throws < '1')):

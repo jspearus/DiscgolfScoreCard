@@ -21,6 +21,7 @@ def home():
             flash('Note added!', category='success')
 
     return render_template("home.html", User=current_user)
+    
 
 @views.route('/newcard', methods=['GET', 'POST'])
 @login_required
@@ -54,6 +55,7 @@ def createCard():
             return render_template("home.html", User=current_user)
 
     return render_template("newcard.html", User=current_user)
+
 
 @views.route('/newgame')
 @login_required
@@ -132,6 +134,7 @@ def gameview():
 
 
     return render_template("games.html", User=current_user)
+
 
 def deleteCurrentGame():
     user = current_user
