@@ -73,7 +73,8 @@ def home():
                 user_id=current_user.id)
             db.session.add(new_game)
             
-            hole = currentGameHoles.query.filter_by(course_id=game.id, user_id=current_user.id).all()
+            hole = currentGameHoles.query.filter_by(course_id=game.id, 
+                                                    user_id=current_user.id).all()
             for x in hole:
                 new_hole = savedGameHoles(
                     hole=x.hole, 

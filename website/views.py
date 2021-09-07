@@ -21,7 +21,7 @@ def home():
             flash('Note added!', category='success')
 
     return render_template("home.html", User=current_user)
-    
+
 
 @views.route('/newcard', methods=['GET', 'POST'])
 @login_required
@@ -30,7 +30,8 @@ def createCard():
         parkName = request.form.get('parkN')
         numHoles = request.form.get('holeN')
         nHoles = int(numHoles)
-        park = courseTemplate.query.filter_by(parkName=parkName, user_id=current_user.id).first()
+        park = courseTemplate.query.filter_by(parkName=parkName, 
+                                            user_id=current_user.id).first()
         if len(parkName) < 1:
             flash('note is too short', category='error')
         elif park:
