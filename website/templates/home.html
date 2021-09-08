@@ -10,28 +10,25 @@
         <li class="list-group-item">
           <h5 align="left">Park: {{ courseTemplate.parkName }} </h5>
           <h6> Holes: {{  courseTemplate.numHoles }} ID: {{ courseTemplate.id }}
-            <button type="submit" class="btn btn-link" formaction="/newgame.html">
-              <span aria-hidden="true">New Game</span>
-            </button>
-            <button type="button" class="close" onClick="deleteNote({{ courseTemplate.id }})">
+            <!-- <button type="button" class="close" onClick="deleteNote({{ courseTemplate.id }})">
               <span aria-hidden="true">&times;</span>
-            </button>
+            </button> -->
           </h6>
           </li>
       {% endif %}
     {% endfor %}
 </ul>
 <!-- End of Creates a list of blank score card templates  -->
-<br />
+<br /><br /><br />
 <div align="right" >
-  <a href="/newcard" class="btn btn-primary btn-lg " 
-  tabindex="-1" role="button" aria-disabled="true">New Card</a>
+  <a href="/scorecards" class="btn btn-primary btn-lg " 
+  tabindex="-1" role="button" aria-disabled="true">New Game</a>
 </div>
 <div align="left" >
   <a href="/games" class="btn btn-primary btn-lg " 
   tabindex="-1" role="button" aria-disabled="true">Games</a>
 </div>
-<br /> <br /> <br /> <br /> <br /> <br />
+<br /> <br /> <br /> <br /> 
 <form method="POST">
   <br/>
   <div align="right">

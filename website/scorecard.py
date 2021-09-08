@@ -40,7 +40,7 @@ def home():
 
         elif btnPress == 'Next':
             hole = hole + 1
-            if hole > 7: hole = 7 
+            if hole > curGame.numHoles: hole = curGame.numHoles 
             curGame.curHole = hole
             db.session.commit()
         

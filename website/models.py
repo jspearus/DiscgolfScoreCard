@@ -15,6 +15,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(150))
     first_name = db.Column(db.String(150), unique=True)
     c_SavedGame = db.Column(db.Integer)
+    c_courseTemplate = db.Column(db.Integer)
     notes = db.relationship('Note')
     courses = db.relationship('courseTemplate')
     games = db.relationship('savedGames')

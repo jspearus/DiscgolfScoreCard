@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, jsonify
+from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for
 from flask_login import login_required, current_user
 from .models import Note, courseTemplate, holeTemplates, savedGames, savedGameHoles, currentGame, currentGameHoles
 from . import db
@@ -61,12 +61,15 @@ def createCard():
 @views.route('/newgame')
 @login_required
 def newgame():
-    park = 'Summit'
-    course = courseTemplate.query.filter_by(parkName=park).first()
     curGame = currentGame.query.filter_by(user_id=current_user.id).first()
+    user = current_user
     if curGame:
         print(curGame.parkName)
     else:
+        course = courseTemplate.query.filter_by(
+            user_id=current_user.id,
+            id=user.c_courseTemplate
+        ).first()
         new_game = currentGame(
             parkName=course.parkName,
             numHoles=course.numHoles,
@@ -91,7 +94,7 @@ def newgame():
         GameOver = True
     else:
         GameOver = False
-    return render_template("newgame.html", Park=course.parkName, 
+    return render_template("newgame.html", Park=curGame.parkName, 
         User=current_user, hole=curGame.curHole, par=curHole.par, 
         Throws=curHole.throws, Score=curHole.throws-curHole.par, GameOver=GameOver)
 
@@ -117,6 +120,31 @@ def games():
 
 
     return render_template("games.html", User=current_user)
+
+@views.route('/scorecards', methods=['GET', 'POST'])
+@login_required
+def cards():
+    if request.method == 'POST':
+        user = current_user
+        gameid = request.form.get('Card')
+        btnPress= request.form.get('Btn')
+        park = courseTemplate.query.filter_by(id=gameid, user_id=current_user.id).first()
+        print(park.parkName)
+        print(btnPress)
+        if btnPress == 'DEL':
+            print('card deleted')
+            return render_template("scorecards.html", User=current_user)
+
+        if park:
+            user. c_courseTemplate = gameid
+            db.session.commit()
+            return redirect(url_for('views.newgame'))
+        else:
+            flash('No Game Selected', category='error')
+
+
+
+    return render_template("scorecards.html", User=current_user)
 
 
 @views.route('/gameview', methods=['GET', 'POST'])
