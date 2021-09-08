@@ -21,7 +21,6 @@ def home():
         temHole = holeTemplates.query.filter_by(user_id=current_user.id, 
                                                 hole=curGame.curHole,
                                                 course_id=current_user.c_courseTemplate).first()
-        print(curHole.par)
         Par = curHole.par
         hole = curGame.curHole
 
