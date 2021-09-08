@@ -113,8 +113,9 @@ def games():
         if park:
             user.c_SavedGame = gameid
             db.session.commit()
+            Total = totalScore()
             return render_template("gameview.html", User=current_user, game=park.parkName,
-                date=park.end_date, savedGame=park)
+                date=park.end_date, savedGame=park, Total=Total)
         else:
             flash('No Game Selected', category='error')
 
@@ -219,3 +220,18 @@ def delete_note():
             hole = ''
     return jsonify({})
 
+def totalScore():
+    print('Total')
+    Total = 0
+    Throws = 0
+    Pars = 0
+    game = savedGames.query.filter_by(id=current_user.c_SavedGame, 
+        user_id=current_user.id).first()
+    holes = savedGameHoles.query.filter_by(course_id=game.id, 
+        user_id=current_user.id).all()
+    for x in holes:
+        Throws = x.throws + Throws
+        Pars = x.par + Pars
+    Total = Throws - Pars
+
+    return Total
