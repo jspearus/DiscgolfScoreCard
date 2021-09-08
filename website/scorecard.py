@@ -115,4 +115,6 @@ def deleteCurrentGame():
             db.session.commit()
             game = ''
             hole = ''
+    current_user.c_courseTemplate = 0
+    db.session.commit()
             

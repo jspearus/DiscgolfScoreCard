@@ -139,12 +139,23 @@ def cards():
             return redirect(url_for('views.newgame'))
         else:
             flash('No Game Selected', category='error')
-        
-        
-
-
-
     return render_template("scorecards.html", User=current_user)
+
+
+@views.route('/continuegame')
+@login_required
+def continueGame():
+    user = current_user
+
+    if user.c_courseTemplate > 0:
+        return redirect(url_for('views.newgame'))
+    else:
+        flash('No Game Selected', category='error')
+        return redirect(url_for('views.home'))
+        
+
+
+
 
 
 @views.route('/gameview', methods=['GET', 'POST'])
