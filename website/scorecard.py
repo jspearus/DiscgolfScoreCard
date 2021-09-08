@@ -14,17 +14,20 @@ scorecard = Blueprint('scorecard', __name__)
 def home():
     if request.method == 'POST':
         curGame = currentGame.query.filter_by(user_id=current_user.id).first()
+
         curHole = currentGameHoles.query.filter_by(user_id=current_user.id, 
                                                 hole=curGame.curHole).first()
+
         temHole = holeTemplates.query.filter_by(user_id=current_user.id, 
                                                 hole=curGame.curHole,
-                                                course_id=curHole.course_id).first()
+                                                course_id=current_user.c_courseTemplate).first()
+        print(curHole.par)
+        Par = curHole.par
+        hole = curGame.curHole
 
         btnPress = request.form.get('NavHole')
         Throws = request.form.get('throws')
-        Par = temHole.par
-        hole = curGame.curHole
-        
+
         if btnPress == 'Enter':
             if ((Throws < '1')):
                 flash('No Throws Entered', category='error')
@@ -32,6 +35,7 @@ def home():
             else:
                 curHole.throws = Throws
                 db.session.commit()
+
         elif btnPress == 'Pre':
             hole = hole - 1
             if hole < 1: hole = 1

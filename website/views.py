@@ -132,7 +132,7 @@ def cards():
         print(park.parkName)
         print(btnPress)
         if btnPress == 'DEL':
-            print('card deleted')
+            deleteCurrentTemp()
             return render_template("scorecards.html", User=current_user)
 
         if park:
@@ -171,6 +171,19 @@ def deleteCurrentGame():
     if park:
         if park.user_id == current_user.id:
             hole = savedGameHoles.query.filter_by(course_id=park.id, user_id=current_user.id).all()
+            for x in hole:
+                db.session.delete(x)
+            db.session.delete(park)
+            db.session.commit()
+            park = ''
+            hole = ''
+
+def deleteCurrentTemp():
+    user = current_user
+    park = courseTemplate.query.filter_by(id=user.c_courseTemplate, user_id=current_user.id).first()
+    if park:
+        if park.user_id == current_user.id:
+            hole = holeTemplates.query.filter_by(course_id=park.id, user_id=current_user.id).all()
             for x in hole:
                 db.session.delete(x)
             db.session.delete(park)
