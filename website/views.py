@@ -129,8 +129,6 @@ def cards():
         gameid = request.form.get('Card')
         btnPress= request.form.get('Btn')
         park = courseTemplate.query.filter_by(id=gameid, user_id=current_user.id).first()
-        print(park.parkName)
-        print(btnPress)
         if btnPress == 'DEL':
             deleteCurrentTemp()
             return render_template("scorecards.html", User=current_user)
@@ -141,6 +139,8 @@ def cards():
             return redirect(url_for('views.newgame'))
         else:
             flash('No Game Selected', category='error')
+        
+        
 
 
 
