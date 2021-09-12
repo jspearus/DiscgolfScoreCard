@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, flash, jsonify, redirect,
 from flask_login import login_required, current_user
 from .models import Note, courseTemplate, holeTemplates, savedGames, savedGameHoles, currentGame, currentGameHoles
 from . import db
+import datetime
 import json
 
 views = Blueprint('views', __name__)
@@ -117,8 +118,9 @@ def games():
             user.c_SavedGame = gameid
             db.session.commit()
             Total = totalScore()
+            Date = park.end_date.date()
             return render_template("gameview.html", User=current_user, game=park.parkName,
-                                   date=park.end_date, savedGame=park, Total=Total)
+                                   date=Date.strftime("%b") + ". " + str(Date.day) + ", " + str(Date.year), savedGame=park, Total=Total)
         else:
             flash('No Game Selected', category='error')
 
