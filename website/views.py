@@ -66,7 +66,7 @@ def newgame():
     curGame = currentGame.query.filter_by(user_id=current_user.id).first()
     user = current_user
     if curGame:
-        print(curGame.parkName)
+        pass
     else:
         course = courseTemplate.query.filter_by(
             user_id=current_user.id,
@@ -136,7 +136,10 @@ def cards():
         btnPress = request.form.get('Btn')
         park = courseTemplate.query.filter_by(
             id=gameid, user_id=current_user.id).first()
+
         if btnPress == 'DEL':
+            user. c_courseTemplate = gameid
+            db.session.commit()
             deleteCurrentTemp()
             return render_template("scorecards.html", User=current_user)
 
@@ -146,6 +149,7 @@ def cards():
             return redirect(url_for('views.newgame'))
         else:
             flash('No Game Selected', category='error')
+
     return render_template("scorecards.html", User=current_user)
 
 
@@ -183,6 +187,7 @@ def deleteCurrentGame():
     user = current_user
     park = savedGames.query.filter_by(
         id=user.c_SavedGame, user_id=current_user.id).first()
+    print(park)
     if park:
         if park.user_id == current_user.id:
             hole = savedGameHoles.query.filter_by(
@@ -230,7 +235,6 @@ def delete_note():
 
 
 def totalScore():
-    print('Total')
     Total = 0
     Throws = 0
     Pars = 0
