@@ -12,6 +12,7 @@
         <th scope="col">Par</th>
         <th scope="col">Throws</th>
         <th scope="col">Score</th>
+        <th scope="col">Avg. Throws</th>
       </tr>
     </thead>
     <tbody>
@@ -22,6 +23,7 @@
               <td>{{  savedGameHoles.par }}</td>
               <td>{{ savedGameHoles.throws }}</td>
               <td>{{savedGameHoles.throws - savedGameHoles.par}}</td>
+              <td>?</td>
             </tr>
         {% endif %}
       {% endfor %}
