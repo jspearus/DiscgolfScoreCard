@@ -8,12 +8,12 @@ DB_NAME = "database.db"
 
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, instance_relative_config=False)
     app.config['SECRET_KEY'] = 'as;lkdjhfgsadkjgfhsadf'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     db.init_app(app)
-        
-    # registers views, auth, and scorecard scripts 
+
+    # registers views, auth, and scorecard scripts
     from .views import views
     from .auth import auth
     from .scorecard import scorecard
@@ -22,12 +22,12 @@ def create_app():
     app.register_blueprint(auth, url_prefix='/')
     app.register_blueprint(scorecard, url_prefix='/')
 
-    #Imports Database Models from models.py script
+    # Imports Database Models from models.py script
     from .models import User, Note, courseTemplate, holeTemplates, savedGames, savedGameHoles
 
     create_database(app)
-    
-    #from flask_login
+
+    # from flask_login
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
@@ -39,6 +39,8 @@ def create_app():
     return app
 
 # creates database if it doesn't allready exist
+
+
 def create_database(app):
     if not path.exists('website/' + DB_NAME):
         db.create_all(app=app)
