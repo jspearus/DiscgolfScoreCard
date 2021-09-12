@@ -2,18 +2,32 @@
 {% block title %}Saved Games{% endblock %}<!-- Labels the browser window -->
 {% block content %} 
 <h4 align="left" >Park: {{ game }}</h4>
-<h4 align="left" >Date: {{ date }}</h4>
 <form method="POST">
   <!-- Creates a table of the selected game score card -->
-  {% for savedGameHoles in savedGame.holes %}
-    {% if savedGameHoles.user_id == User.id %}
-      <li class="list-group-item">
-        <h7 align="left">Hole: {{ savedGameHoles.hole }} - 
-          Par: {{  savedGameHoles.par }} - Throws: {{ savedGameHoles.throws }} 
-          - Score: {{savedGameHoles.throws - savedGameHoles.par}}</h7>
-        </li>
-    {% endif %}
-  {% endfor %}
+  <table class="table caption-top table-striped table-bordered table-primary">
+    <caption>Date: {{ date }}</caption>
+    <thead class="table table-dark">
+      <tr>
+        <th scope="col">Hole</th>
+        <th scope="col">Par</th>
+        <th scope="col">Throws</th>
+        <th scope="col">Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for savedGameHoles in savedGame.holes %}
+        {% if savedGameHoles.user_id == User.id %}
+            <tr>
+              <th scope="row">{{ savedGameHoles.hole }}</th>
+              <td>{{  savedGameHoles.par }}</td>
+              <td>{{ savedGameHoles.throws }}</td>
+              <td>{{savedGameHoles.throws - savedGameHoles.par}}</td>
+            </tr>
+        {% endif %}
+      {% endfor %}
+    </tbody>
+  </table>
+  <br/>
   <h4 align="center" >Total Score: {{ Total }}</h4>
   <!-- End of Creates a table of the selected game score card -->
   <br /><br/>
