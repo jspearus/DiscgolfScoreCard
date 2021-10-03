@@ -84,7 +84,7 @@ def newgame():
             new_hole = currentGameHoles(
                 hole=i+1,
                 par=temPar.par,
-                throws=0,
+                throws=temPar.par,
                 user_id=current_user.id)
 
             db.session.add(new_hole)
@@ -187,7 +187,6 @@ def deleteCurrentGame():
     user = current_user
     park = savedGames.query.filter_by(
         id=user.c_SavedGame, user_id=current_user.id).first()
-    print(park)
     if park:
         if park.user_id == current_user.id:
             hole = savedGameHoles.query.filter_by(

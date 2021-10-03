@@ -15,38 +15,41 @@ def home():
     if request.method == 'POST':
         curGame = currentGame.query.filter_by(user_id=current_user.id).first()
 
-        curHole = currentGameHoles.query.filter_by(user_id=current_user.id, 
-                                                hole=curGame.curHole).first()
+        curHole = currentGameHoles.query.filter_by(user_id=current_user.id,
+                                                   hole=curGame.curHole).first()
 
-        temHole = holeTemplates.query.filter_by(user_id=current_user.id, 
-                                                hole=curGame.curHole,
-                                                course_id=current_user.c_courseTemplate).first()
+        temHole = holeTemplates.query.filter_by(user_id=current_user.id,
+                                                hole=curGame.curHole, course_id=current_user.c_courseTemplate).first()
         Par = curHole.par
         hole = curGame.curHole
 
         btnPress = request.form.get('NavHole')
         Throws = request.form.get('throws')
 
-        if btnPress == 'Enter':
-            if ((Throws < '1')):
-                flash('No Throws Entered', category='error')
+        if btnPress == 'up':
+            curHole.throws = curHole.throws + 1
+            db.session.commit()
 
-            else:
-                curHole.throws = Throws
-                db.session.commit()
+        elif btnPress == 'dn':
+            curHole.throws = curHole.throws - 1
+            if curHole.throws < 0:
+                curHole.throws = 0
+            db.session.commit()
 
         elif btnPress == 'Pre':
             hole = hole - 1
-            if hole < 1: hole = 1
+            if hole < 1:
+                hole = 1
             curGame.curHole = hole
             db.session.commit()
 
         elif btnPress == 'Next':
             hole = hole + 1
-            if hole > curGame.numHoles: hole = curGame.numHoles 
+            if hole > curGame.numHoles:
+                hole = curGame.numHoles
             curGame.curHole = hole
             db.session.commit()
-        
+
         elif btnPress == 'UP':
             Par = Par + 1
             curHole.par = Par
@@ -56,7 +59,8 @@ def home():
 
         elif btnPress == 'DN':
             Par = Par - 1
-            if Par < 1: Par = 1
+            if Par < 1:
+                Par = 1
             curHole.par = Par
             db.session.commit()
             temHole.par = Par
@@ -64,23 +68,23 @@ def home():
 
         elif btnPress == 'del':
             deleteCurrentGame()
-            #rediects to home function in views script
+            # rediects to home function in views script
             return redirect(url_for('views.home'))
 
         elif btnPress == 'save':
             game = currentGame.query.filter_by(user_id=current_user.id).first()
             new_game = savedGames(
-                parkName=game.parkName, 
+                parkName=game.parkName,
                 numHoles=game.numHoles,
-                curHole=0, 
+                curHole=0,
                 user_id=current_user.id)
             db.session.add(new_game)
-            
-            hole = currentGameHoles.query.filter_by(course_id=game.id, 
+
+            hole = currentGameHoles.query.filter_by(course_id=game.id,
                                                     user_id=current_user.id).all()
             for x in hole:
                 new_hole = savedGameHoles(
-                    hole=x.hole, 
+                    hole=x.hole,
                     par=x.par,
                     throws=x.throws,
                     user_id=current_user.id)
@@ -88,7 +92,7 @@ def home():
                 new_game.holes.append(new_hole)
             db.session.commit()
             new_game = ''
-            new_hole=''
+            new_hole = ''
             deleteCurrentGame()
             flash('Game Saved!', category='success')
             return redirect(url_for('views.home'))
@@ -98,16 +102,19 @@ def home():
         GameOver = True
     else:
         GameOver = False
-    return render_template("newgame.html", Park=curGame.parkName, 
-                    User=current_user, hole=curGame.curHole, Throws=curHole.throws, 
-                    Score=curHole.throws - curHole.par, par=curHole.par, GameOver=GameOver)
+    return render_template("newgame.html", Park=curGame.parkName,
+                           User=current_user, hole=curGame.curHole, Throws=curHole.throws,
+                           Score=curHole.throws - curHole.par, par=curHole.par, GameOver=GameOver)
 
 # function to delete the current played game
+
+
 def deleteCurrentGame():
     game = currentGame.query.filter_by(user_id=current_user.id).first()
     if game:
         if game.user_id == current_user.id:
-            hole = currentGameHoles.query.filter_by(course_id=game.id, user_id=current_user.id).all()
+            hole = currentGameHoles.query.filter_by(
+                course_id=game.id, user_id=current_user.id).all()
             for x in hole:
                 db.session.delete(x)
             db.session.delete(game)
@@ -116,4 +123,26 @@ def deleteCurrentGame():
             hole = ''
     current_user.c_courseTemplate = 0
     db.session.commit()
-            
+
+# function to delete the current played game end
+
+
+def calAvgThrows():
+    game = currentGame.query.filter_by(user_id=current_user.id).first()
+    temHole = holeTemplates.query.filter_by(user_id=current_user.id,
+                                            hole=game.curHole,
+                                            course_id=current_user.c_courseTemplate).first()
+    if game:
+        if game.user_id == current_user.id:
+            hole = currentGameHoles.query.filter_by(
+                course_id=game.id, user_id=current_user.id).all()
+            for x in hole:
+                new_avgThrow = holeTemplates(
+                    hole=x.hole,
+
+                )
+            db.session.commit()
+            game = ''
+            hole = ''
+    current_user.c_courseTemplate = 0
+    db.session.commit()

@@ -34,6 +34,7 @@ class holeTemplates(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     hole = db.Column(db.Integer)
     par = db.Column(db.Integer)
+    avgThrows = db.Column(db.Integer)
     course_id = db.Column(db.Integer, db.ForeignKey('courseTemplate.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('User.id'))
 

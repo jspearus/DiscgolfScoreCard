@@ -29,26 +29,34 @@
     </div>
   </div>
   </h5>
-  <br /><br />
-  <div class="form-group">
-      <label for="stroke">Throws: {{Throws}}</label>
-      <input 
-          type="number" 
-          class="form-control" 
-          id="throws" 
-          name="throws" 
-          onkeypress="return noenter()"
-      />
+  <br /><br /><br /><br />
+  <div align="left" class="row justify-content-md-center">
+    <div class="col col-md-2">
+      <button 
+        class="btn btn-primary"
+        name="NavHole"
+        type="submit" value="dn">-</button>
+    </div>
+    <div>
+      <h5 align ="center">Throws: {{Throws}}
+    </div>
+    <div align="right" class="col col-md-2">
+      <button 
+      class="btn btn-primary"
+      name="NavHole"
+      type="submit" value="up">+</button>
+    </div>
   </div>
-  <br />
-  <h5 align="center">Score: {{Score}}
+  <br /><br /><br />
+  <div align="left"class="row justify-content-md-center">
+    <div class="col col-md-2">
+      <h5 align="left">Score: {{Score}}
+    </div>
+    <div class="col col-md-2">
+      <h5 align="right">Cur. Score: TBB
+    </div>
+  </div>
   </h5>
-  <br />
-  <div align="center" >
-    <button class="btn btn-primary"
-            name="NavHole" 
-            type="submit" value="Enter">Enter</button>
-  </div>
   <br />
   <div align="left" class="row justify-content-md-center">
     <div class="col col-md-2">
