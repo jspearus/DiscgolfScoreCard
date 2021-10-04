@@ -33,6 +33,13 @@ def login():
     return render_template("login.html", User=current_user)
 
 
+@auth.route('/settings')
+@login_required
+def settings():
+
+    return render_template("settings.html", User=current_user)
+
+
 @auth.route('/logout')
 @login_required
 def logout():
