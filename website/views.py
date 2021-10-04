@@ -98,7 +98,7 @@ def newgame():
         GameOver = False
     return render_template("newgame.html", Park=curGame.parkName,
                            User=current_user, hole=curGame.curHole, par=curHole.par,
-                           Throws=curHole.throws, Score=curHole.throws-curHole.par, GameOver=GameOver)
+                           Throws=curHole.throws, Score=curHole.throws-curHole.par, GameOver=GameOver, curScore=0)
 
 
 @views.route('/games', methods=['GET', 'POST'])

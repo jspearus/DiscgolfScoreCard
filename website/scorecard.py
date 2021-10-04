@@ -97,6 +97,7 @@ def home():
             flash('Game Saved!', category='success')
             return redirect(url_for('views.home'))
         btnPress = ''
+    curScore=currentScore()
     curHole = currentGameHoles.query.filter_by(hole=curGame.curHole).first()
     if curGame.numHoles == curHole.hole and curHole.throws > 0:
         GameOver = True
@@ -104,7 +105,7 @@ def home():
         GameOver = False
     return render_template("newgame.html", Park=curGame.parkName,
                            User=current_user, hole=curGame.curHole, Throws=curHole.throws,
-                           Score=curHole.throws - curHole.par, par=curHole.par, GameOver=GameOver)
+                           Score=curHole.throws - curHole.par, par=curHole.par, GameOver=GameOver, curScore=curScore)
 
 # function to delete the current played game
 
@@ -125,6 +126,19 @@ def deleteCurrentGame():
     db.session.commit()
 
 # function to delete the current played game end
+
+#function to calculate current score
+def currentScore():
+    #coode here
+    tthrows = 0
+    pars = 0
+    hole = currentGameHoles.query.filter_by(user_id=current_user.id).all()
+    for x in hole:
+        pars = x.par + pars
+        tthrows = x.throws + tthrows
+
+    cScore = tthrows - pars
+    return cScore
 
 
 def calAvgThrows():
