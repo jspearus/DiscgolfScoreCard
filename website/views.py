@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for
 from flask_login import login_required, current_user
+from sqlalchemy.sql.expression import true
 from .models import Note, courseTemplate, holeTemplates, savedGames, savedGameHoles, currentGame, currentGameHoles
 from . import db
 import datetime
@@ -11,6 +12,16 @@ views = Blueprint('views', __name__)
 @views.route('/', methods=['GET', 'POST'])
 @login_required
 def home():
+    Game = currentGame.query.filter_by(user_id=current_user.id).first()
+    bCard = courseTemplate.query.filter_by(user_id=current_user.id).first()
+    if Game:
+        game = "true"
+    else:
+        game = "false"
+    if bCard:
+        card = "true"
+    else:
+        card = "false"
     if request.method == 'POST':
         note = request.form.get('note')
 
@@ -22,7 +33,7 @@ def home():
             db.session.commit()
             flash('Note added!', category='success')
 
-    return render_template("home.html", User=current_user)
+    return render_template("home.html", User=current_user, game=game, card=card)
 
 
 @views.route('/newcard', methods=['GET', 'POST'])
@@ -54,8 +65,7 @@ def createCard():
             new_park = ''
             new_hole = ''
 
-            flash('Card added!', category='success')
-            return render_template("home.html", User=current_user)
+            return redirect(url_for('views.newgame'))
 
     return render_template("newcard.html", User=current_user)
 
@@ -153,6 +163,32 @@ def cards():
     return render_template("scorecards.html", User=current_user)
 
 
+@views.route('/cardedit', methods=['GET', 'POST'])
+@login_required
+def editcard():
+    if request.method == 'POST':
+        user = current_user
+        gameid = request.form.get('Card')
+        btnPress = request.form.get('Btn')
+        park = courseTemplate.query.filter_by(
+            id=gameid, user_id=current_user.id).first()
+
+        if btnPress == 'DEL':
+            user. c_courseTemplate = gameid
+            db.session.commit()
+            deleteCurrentTemp()
+            return render_template("cardedit.html", User=current_user)
+
+        if park:
+            user. c_courseTemplate = gameid
+            db.session.commit()
+            return redirect(url_for('views.newgame'))
+        else:
+            flash('No Game Selected', category='error')
+
+    return render_template("cardedit.html", User=current_user)
+
+
 @views.route('/continuegame')
 @login_required
 def continueGame():
@@ -181,6 +217,32 @@ def gameview():
             flash('No Game Selected', category='error')
 
     return render_template("games.html", User=current_user)
+
+
+@views.route('/gameedit', methods=['GET', 'POST'])
+@login_required
+def gameedit():
+    if request.method == 'POST':
+        gameid = request.form.get('Game')
+        btnPress = request.form.get('delete')
+        park = savedGames.query.filter_by(
+            id=gameid, user_id=current_user.id).first()
+        user = current_user
+        if btnPress == 'DEL':
+            deleteCurrentGame()
+            return render_template("home.html", User=current_user)
+
+        if park:
+            user.c_SavedGame = gameid
+            db.session.commit()
+            Total = totalScore()
+            Date = park.end_date.date()
+            return render_template("deletegame.html", User=current_user, game=park.parkName,
+                                   date=Date.strftime("%b") + ". " + str(Date.day) + ", " + str(Date.year), savedGame=park, Total=Total)
+        else:
+            flash('No Game Selected', category='error')
+
+    return render_template("gameedit.html", User=current_user)
 
 
 def deleteCurrentGame():

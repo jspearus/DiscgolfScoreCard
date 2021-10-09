@@ -8,20 +8,30 @@
 <!-- End of Creates a list of blank score card templates  -->
 <br /><br /><br />
 <div align="right" >
-  <a href="/scorecards" class="btn btn-primary btn-lg " 
-  tabindex="-1" role="button" aria-disabled="true">view Cards</a>
+  <a href="/cardedit" class="btn btn-primary btn-lg " 
+  tabindex="-1" role="button" aria-disabled="true">Edit Cards</a>
 </div>
 <br /> <br /> <br /> 
 <div align="right" >
-  <a href="/games" class="btn btn-primary btn-lg " 
-  tabindex="-1" role="button" aria-disabled="true">View Games</a>
+  <a href="/gameedit" class="btn btn-primary btn-lg " 
+  tabindex="-1" role="button" aria-disabled="true">Delete Games</a>
 </div>
 <br /> <br /> <br />
 <form method="POST">
   <br/>
   <div align="right">
-   <a href="#" class="btn btn-primary btn-lg " 
-   tabindex="-1" role="button" aria-disabled="true">Change Password</a>
+   <a href="/editprofile" class="btn btn-primary btn-lg " 
+   tabindex="-1" role="button" aria-disabled="true">Profile Settings</a>
+  </div>
+  <br /> <br />
+  <div align="right">
+    <a href="/" class="btn btn-primary btn-lg " 
+    tabindex="-1" role="button" aria-disabled="true">Back to Home</a>
+   </div>
+   <br /> <br />
+  <div align="left">
+    <a class="btn btn-primary btn-lg " 
+    tabindex="-1" role="button" href="/logout">Logout</a>
   </div>
 </form>
 {% endblock %}

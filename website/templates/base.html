@@ -10,7 +10,7 @@
         <meta name="theme-color" content="#ffffff">
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initiak-scale=1" />
-        <link
+      <link
         rel="stylesheet"
         href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
@@ -26,8 +26,8 @@
     <body>
       <!-- Main menu code-->
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <button 
-            class="navbar-toggler" 
+        <button
+            class="navbar-toggler ml-auto" 
             type="button" 
             data-toggle="collapse" 
             data-target="#navbar"
@@ -35,11 +35,10 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbar">
-          <div class="navbar-nav">
+          <div class="navbar-nav ml-auto">
               {% if User.is_authenticated %}
-              <a class="nav-item nav-link" id="home" href="/">Home</a>
-              <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
-              <a class="nav-item nav-link" id="settings" href="/settings">Settings</a>
+              <a class="nav-item nav-link ml-auto" id="home" href="/">Home</a>
+              <a class="nav-item nav-link ml-auto" id="settings" href="/settings">Settings</a>
               {% else %}
               <a class="nav-item nav-link" id="login" href="/login">Login</a>
               <a class="nav-item nav-link" id="signUp" href="/sign-up">Sign Up</a>

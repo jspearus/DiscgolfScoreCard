@@ -40,6 +40,34 @@ def settings():
     return render_template("settings.html", User=current_user)
 
 
+@auth.route('/editprofile', methods=['GET', 'POST'])
+@login_required
+def editprofile():
+    if request.method == 'POST':
+        first_name = request.form.get('firstName')
+        password1 = request.form.get('password1')
+        password2 = request.form.get('password2')
+        if first_name:
+            first_name = first_name
+            flash('Username Changed Successfully!', category='success')
+        else:
+            first_name = current_user.first_name
+
+        if password1 != password2:
+            flash('Passwords do not match', category='error')
+
+        elif len(password1) < 5:
+            flash('Password must be greater than 5 characters', category='error')
+
+        else:
+            current_user.password = generate_password_hash(
+                password1, method='sha256')
+            db.session.commit()
+            flash('Password Changed Successfully!', category='success')
+
+    return render_template("editprofile.html", User=current_user)
+
+
 @auth.route('/logout')
 @login_required
 def logout():

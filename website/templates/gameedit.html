@@ -1,0 +1,40 @@
+{% extends "base.html"%} <!--Loads the base html file-->
+{% block title %}Saved Games{% endblock %}<!--Labels browser wind-->
+{% block content %} 
+<h1 align="center">Delete Games:  {{ User.first_name }}</h1>
+<h4 align="left" >Recent Games</h4>
+<form method="POST">
+    <!-- creates dropdown menu of stored saved games-->
+    <select type="number" class="form-select form-select-lg mb-3" name="Game" id="Game" aria-label=".form-select-lg example">
+        <option value=NULL selected>Select Game</option>
+        {% for savedGames in User.games %}
+            {% if savedGames.user_id == User.id %}
+                <option value={{savedGames.id}}>{{savedGames.parkName}} : 
+                    {{ savedGames.end_date  }}
+                </option>
+            {% endif %}
+        {% endfor %}
+    </select>
+    <!-- End of creates dropdown menu of stored saved games-->
+    <!-- Button submits the form -->
+    <div align="right">
+        <button type="submit" class="btn btn-primary">View Card</button>
+    </div>
+    <br /><br /> <br />
+    <button 
+    class="btn btn-primary"
+    name="delete"
+    id="delete"
+    type="submit" value="DEL">Delete Game</button>
+    <!-- End of button sends the delete command to delete the selected saved game -->
+    <!-- Button submits the form -->
+</form>
+<br /> <br /> <br /> <br /> <br /> <br />
+  <br/>
+  <!-- Button to navigate back to home screen -->
+  <div align="right">
+   <a href="/settings" class="btn btn-primary btn-lg " 
+   tabindex="-1" role="button" aria-disabled="true">Back to Settings</a>
+  </div>
+  <!-- End of Button to navigate back to home screen -->
+{% endblock %}

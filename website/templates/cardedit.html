@@ -20,14 +20,18 @@
         <button type="submit" class="btn btn-primary">Start Game</button>
     </div>
     <!-- Button submits the form -->
-    <br /> <br /> <br /><br /> <br /> <br /><br /> <br /> 
+    <br /> <br /> 
     <!-- button sends the delete command to delete the selected saved game -->
-
+  <button 
+  class="btn btn-primary"
+  name="Btn"
+  id="Btn"
+  type="submit" value="DEL">Delete Card</button>
   <!-- End of button sends the delete command to delete the selected saved game -->
 </form>
-<br />
+<br /><br /><br /> <br /> <br /><br /> <br /> 
 <!-- Button to navigate back to home screen -->
-<div align="left">
+<div align="right">
     <a href="/newcard" class="btn btn-primary btn-lg " 
     tabindex="-1" role="button" aria-disabled="true">Create Card</a>
    </div>
@@ -36,8 +40,8 @@
   <br/>
   <!-- Button to navigate back to home screen -->
   <div align="right">
-   <a href="/" class="btn btn-primary btn-lg " 
-   tabindex="-1" role="button" aria-disabled="true">Back to home</a>
+   <a href="/settings" class="btn btn-primary btn-lg " 
+   tabindex="-1" role="button" aria-disabled="true">Back to Settings</a>
   </div>
   <!-- End of Button to navigate back to home screen -->
 {% endblock %}

@@ -19,17 +19,31 @@
     {% endfor %}
 </ul>
 <!-- End of Creates a list of blank score card templates  -->
-<br /><br /><br />
+<br />
 <div align="right" >
-  <a href="/scorecards" class="btn btn-primary btn-lg " 
-  tabindex="-1" role="button" aria-disabled="true">New Game</a>
+  <a href="/games" class="btn btn-primary btn-lg " 
+  tabindex="-1" role="button" aria-disabled="true">View Games</a>
 </div>
-<br /> <br /> <br /> <br /> 
-<form method="POST">
-  <br/>
-  <div align="right">
-   <a href="/continuegame" class="btn btn-primary btn-lg " 
-   tabindex="-1" role="button" aria-disabled="true">Continue Game</a>
+<br /><br /><br /><br /><br />
+{% if game == "false" and card == "true"%}
+  <div align="right" >
+    <a href="/scorecards" class="btn btn-primary btn-lg " 
+    tabindex="-1" role="button" aria-disabled="true">New Game</a>
   </div>
-</form>
+{% endif %}
+{% if game == "false" and card == "false"%}
+  <div align="right" >
+    <a href="/newcard" class="btn btn-primary btn-lg " 
+    tabindex="-1" role="button" aria-disabled="true">New Game</a>
+  </div>
+{% endif %}
+<br /><br />
+{% if game == "true" %}
+  <form method="POST">
+    <div align="right">
+    <a href="/continuegame" class="btn btn-primary btn-lg " 
+    tabindex="-1" role="button" aria-disabled="true">Continue Game</a>
+    </div>
+  </form>
+{% endif %}
 {% endblock %}
