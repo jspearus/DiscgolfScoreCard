@@ -1,54 +1,32 @@
 {% extends "base.html"%}
 {% block title %}NewGame{% endblock %}
-{% block content %} 
+{% block content %}
 <form method="POST">
   <!-- Form for playing a new game -->
-  <h3 align ="center">Park: {{Park}} 
+  <h3 align="center">Park: {{Park}}
   </h3>
-  <h3 align ="center">
+  <h3 align="center">
     <div>Hole:</div>
     <a>
       {{hole}}
     </a>
   </h3>
-  <div align="left" class="row justify-content-md-center">
-    <div class="col col-md-2">
-      <button 
-        class="btn btn-primary"
-        name="NavHole"
-        type="submit" value="DN">-</button>
-    </div>
-    <div>
-      <h5 align ="center">PAR: {{par}}
-    </div>
-    <div align="right" class="col col-md-2">
-      <button 
-      class="btn btn-primary"
-      name="NavHole"
-      type="submit" value="UP">+</button>
-    </div>
-  </div>
+
   </h5>
   <br /><br /><br /><br />
   <div align="left" class="row justify-content-md-center">
     <div class="col col-md-2">
-      <button 
-        class="btn btn-primary"
-        name="NavHole"
-        type="submit" value="dn">-</button>
+      <button class="btn btn-primary" name="NavHole" type="submit" value="dn">-</button>
     </div>
     <div>
-      <h5 align ="center">Throws: {{Throws}}
+      <h5 align="center">Throws: {{Throws}}
     </div>
     <div align="right" class="col col-md-2">
-      <button 
-      class="btn btn-primary"
-      name="NavHole"
-      type="submit" value="up">+</button>
+      <button class="btn btn-primary" name="NavHole" type="submit" value="up">+</button>
     </div>
   </div>
   <br /><br /><br />
-  <div align="left"class="row justify-content-md-center">
+  <div align="left" class="row justify-content-md-center">
     <div class="col col-md-2">
       <h5 align="left">Score: {{Score}}
     </div>
@@ -60,45 +38,33 @@
   <br />
   <div align="left" class="row justify-content-md-center">
     <div class="col col-md-2">
-      <button 
-        class="btn btn-primary"
-        name="NavHole"
-        type="submit" value="Pre">Prev. Hole</button>
+      <button class="btn btn-primary" name="NavHole" type="submit" value="Pre">Prev. Hole</button>
     </div>
     <div align="right" class="col col-md-2">
-      <button 
-      class="btn btn-primary"
-      name="NavHole"
-      type="submit" value="Next">Next Hole</button>
+      <button class="btn btn-primary" name="NavHole" type="submit" value="Next">Next Hole</button>
     </div>
   </div>
   <br /><br /><br />
   {% if GameOver %}
-    <div align="left" class="row justify-content-md-center">
-      <div class="col col-md-2">
-        <button 
-          class="btn btn-primary"
-          name="NavHole"
-          type="submit" value="del">Delete Game</button>
-      </div>
-      <div align="right" class="col col-md-2">
-        <button 
-        class="btn btn-primary"
-        name="NavHole"
-        type="submit" value="save">Save Game</button>
-      </div>
+  <div align="left" class="row justify-content-md-center">
+    <div class="col col-md-2">
+      <button class="btn btn-primary" name="NavHole" type="submit" value="del">Delete Game</button>
     </div>
-    <br /><br />
+    <div align="right" class="col col-md-2">
+      <button class="btn btn-primary" name="NavHole" type="submit" value="save">Save Game</button>
+    </div>
+  </div>
+  <br /><br />
   {% endif %}
 </form>
 <!-- Button to navigate back to home screen -->
 <div align="right">
-  <a href="/" class="btn btn-primary btn-lg " 
-  tabindex="-1" role="button" aria-disabled="true">Back to home</a>
- </div>
- <!-- End of Button to navigate back to home screen -->
+  <a href="/" class="btn btn-primary btn-lg " tabindex="-1" role="button" aria-disabled="true">Back to home</a>
+</div>
+<!-- End of Button to navigate back to home screen -->
 <script type="text/javascript">
   function noenter() {
-    return !(window.event && window.event.keyCode == 13); }
-  </script>
+    return !(window.event && window.event.keyCode == 13);
+  }
+</script>
 {% endblock %}
